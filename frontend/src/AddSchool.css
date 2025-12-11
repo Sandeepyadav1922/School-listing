@@ -1,0 +1,10 @@
+.newpage-container {
+    margin-top: 8rem;
+    margin-bottom: 4rem;
+}
+
+.add-btns {
+    display: flex;
+    gap: 20px;
+}
+
