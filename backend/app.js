@@ -19,6 +19,7 @@ const upload = multer({ storage });
 app.use(express.json());
 app.use(cors({
     http:"//localhost:5173",
+    https:"//school-app-q22h.onrender.com"
 }))
 app.use("/images", express.static("uploads/schoolImages"));
 

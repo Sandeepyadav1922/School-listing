@@ -225,7 +225,7 @@ function AddSchool() {
       });
 
       try {
-        await axios.post("http://localhost:8080/schools", formData, {
+        await axios.post("https://school-listing.onrender.com/schools", formData, {
           headers: { "Content-Type": "multipart/form-data" }
         });
         navigate("/");
