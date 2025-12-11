@@ -56,26 +56,25 @@ app.get("/schools", (req, res) => {
 
 //Create Route
 app.post("/schools", upload.single('image'), (req, res) => {
-    let {name, address, city, state, contact, email_id} = req.body;
-    if(!req.file) {
-        return res.status(500).json({message: "Image is required"});
-    }
-    if(!name || !address || !city || !state || !contact || !email_id) {
+    let {name, address, city, state, contact, image, email_id} = req.body;
+    // if(!req.file) {
+    //     return res.status(500).json({message: "Image is required"});
+    // }
+    if(!name || !address || !city || !state || !contact || !image || !email_id) {
         res.status(500).json({message: "All fields required "});
     }
-    const image = req.file.filename;
+    // const image = req.file.filename;
     const id = uuidv4();
     let data = [id, name, address, city, state, contact, image, email_id];
     let q = "INSERT INTO schools(id, name, address, city, state, contact, image, email_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     try {
         db.query(q, data, (err, result) => {
             if (err) {
-                if(err) {
             if(err.code === "ER_DUP_ENTRY") return res.status(400).json({message: "School already exists"});
             return res.status(500).json({message: err.message});
         }
         res.status(200).json("School Added Successfully");
-    }})
+    })
     } catch(err) {
         res.status(500).json({message: "Something wrong in DB"});
     }

@@ -17,7 +17,8 @@ function ShowSchools() {
       {schools.map((school) => (
         <div className="card col" key={school.id} >
           <img
-            src= {`http://localhost:8080/images/${school.image}`}
+            // src= {`http://localhost:8080/images/${school.image}`}
+            src={school.Image}
             className="card-img-top"
             alt={school.name}
             style={{height: "20rem"}}
