@@ -4,6 +4,7 @@ require("dotenv").config();
 const mysql = require("mysql2");
 const cors = require("cors");
 const multer  = require('multer');
+const { v4: uuidv4 } = require('uuid');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -22,13 +23,6 @@ app.use(cors({
     https:"//school-app-q22h.onrender.com"
 }))
 app.use("/images", express.static("uploads/schoolImages"));
-
-// const db = mysql.createConnection ({
-//     host: "localhost",
-//     user: "root",
-//     database: "schooldb",
-//     password: "sandeep@0001",
-// });
 
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -62,7 +56,7 @@ app.get("/schools", (req, res) => {
 
 //Create Route
 app.post("/schools", upload.single('image'), (req, res) => {
-    let {id, name, address, city, state, contact, email_id} = req.body;
+    let {name, address, city, state, contact, email_id} = req.body;
     if(!req.file) {
         return res.status(500).json({message: "Image is required"});
     }
@@ -70,18 +64,18 @@ app.post("/schools", upload.single('image'), (req, res) => {
         res.status(500).json({message: "All fields required "});
     }
     const image = req.file.filename;
+    const id = uuidv4();
     let data = [id, name, address, city, state, contact, image, email_id];
     let q = "INSERT INTO schools(id, name, address, city, state, contact, image, email_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     try {
         db.query(q, data, (err, result) => {
             if (err) {
-                if (err.code === "ER_DUP_ENTRY") {
-                    return res.status(400).json({ message: "School already exists" });
-                }
-                return res.status(500).json({message: "Database error"});
-            }
-            res.status(200).json("School Added Successfully");
-        })
+                if(err) {
+            if(err.code === "ER_DUP_ENTRY") return res.status(400).json({message: "School already exists"});
+            return res.status(500).json({message: err.message});
+        }
+        res.status(200).json("School Added Successfully");
+    }})
     } catch(err) {
         res.status(500).json({message: "Something wrong in DB"});
     }
