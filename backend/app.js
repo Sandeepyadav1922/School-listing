@@ -22,21 +22,20 @@ app.use(cors({
 }))
 app.use("/images", express.static("uploads/schoolImages"));
 
-const db = mysql.createConnection ({
-    host: "localhost",
-    user: "root",
-    database: "schooldb",
-    password: "sandeep@0001",
-});
-
-// const db = mysql.createConnection({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_DATABASE,
-//   port: process.env.DB_PORT,
-//   ssl: { rejectUnauthorized: false }
+// const db = mysql.createConnection ({
+//     host: "localhost",
+//     user: "root",
+//     database: "schooldb",
+//     password: "sandeep@0001",
 // });
+
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT,
+});
 
 db.connect((err) => {
     if(err) {
