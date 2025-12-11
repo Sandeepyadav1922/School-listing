@@ -78,8 +78,7 @@ app.post("/schools", upload.single('image'), (req, res) => {
                 if (err.code === "ER_DUP_ENTRY") {
                     return res.status(400).json({ message: "School already exists" });
                 }
-
-                res.status(500).json({message: "Database error"});
+                return res.status(500).json({message: "Database error"});
             }
             res.status(200).json("School Added Successfully");
         })

@@ -7,7 +7,7 @@ function ShowSchools() {
 
   useEffect(() => {
     axios
-      .get("https://school-listing.onrender.com/schools")
+      .get("http://localhost:8080/schools")
       .then((res) => setSchools(res.data))
       .catch((err) => console.log(err));
   }, []);
