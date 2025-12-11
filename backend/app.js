@@ -57,13 +57,9 @@ app.get("/schools", (req, res) => {
 //Create Route
 app.post("/schools", upload.single('image'), (req, res) => {
     let {name, address, city, state, contact, image, email_id} = req.body;
-    // if(!req.file) {
-    //     return res.status(500).json({message: "Image is required"});
-    // }
     if(!name || !address || !city || !state || !contact || !image || !email_id) {
         res.status(500).json({message: "All fields required "});
     }
-    // const image = req.file.filename;
     const id = uuidv4();
     let data = [id, name, address, city, state, contact, image, email_id];
     let q = "INSERT INTO schools(id, name, address, city, state, contact, image, email_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

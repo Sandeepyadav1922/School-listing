@@ -7,7 +7,7 @@ function ShowSchools() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/schools")
+      .get(`${import.meta.env.VITE_API_URL}/schools`)
       .then((res) => setSchools(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -17,7 +17,6 @@ function ShowSchools() {
       {schools.map((school) => (
         <div className="card col" key={school.id} >
           <img
-            // src= {`http://localhost:8080/images/${school.image}`}
             src={school.Image}
             className="card-img-top"
             alt={school.name}
